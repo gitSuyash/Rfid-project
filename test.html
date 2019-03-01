@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    .check {
+        background-color: yellow;
+
+    }
+    a{
+    	color:white;
+    }
+
+    .input {
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #root {
+        display: flex;
+        justify-content: center;
+    }
+
+    .default {
+        background-color: #2ECC71;
+
+        font-size: 30px;
+        padding-left: 12px;
+        border: 1px solid grey;
+    }
+
+    #root {
+        height: 80vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-image: url('t1.jpg');
+        background-size: cover;
+    }
+
+    .entryOne {
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        width: 500px;
+        height: 40vh;
+        padding-left: 40px;
+        padding-top: 20px;
+        border: 15px solid #224E8D;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+
+    .entryTwo {
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        width: 500px;
+        height: 40vh;
+        padding-left: 40px;
+        padding-top: 20px;
+        border: 15px solid #224E8D;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+    </style>
+    <title></title>
+</head>
+
+<body>
+    <div class="input">
+        <P>Tap Patient's RFID</P><br>
+        <button onclick="call()">Get Status</button>
+    </div>
+    <div id="root">
+        <!--  <div class="entryOne">
+            <p>name:suyash</p>
+            <p>name:suyash</p>
+            <p>name:suyash</p>
+        </div>
+        <div class="entryTwo">
+            <p>name:<a href="#">suyash</a></p>
+            <p>name:<a href="#">suyash</a></p>
+        </div> -->
+    </div>
+    <script type="text/javascript">
+    	var globalData;
+    	var dataHolder;
+    	var count;
+    var request = new XMLHttpRequest();
+        request.open("GET",'https://script.google.com/macros/s/AKfycbymKdPssVNVMEgrx4BqKbvmfSao8cxRP4uvFFaYvBTy4AJBeTo/exec');
+            // request.setRequestHeader('Access-Control-Allow-Headers', '*');
+            // // request.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36")
+
+        request.onload = () => {
+            var pokeApiData = JSON.parse(request.responseText);
+            globalData = pokeApiData;
+            dataHolder = globalData.user;
+            count=dataHolder.length;
+
+            for (i = 0; i < 10; i++) {
+                console.log(globalData);
+            }
+        };
+        request.send();
+    const call = () => {
+       var verificationData = dataHolder[0].Id;
+       console.log(verificationData)
+       // var count;
+       var j,n;
+       var flag=0;
+       var displayData=0;
+       for(j=1;j<count;j++){
+       	if(verificationData==dataHolder[j].Id){
+       		flag=j;
+       		n=1;
+       	       	}
+       }
+
+       console.log(flag);
+console.log(displayData);
+       var display =(flag)=>{
+        const body = document.getElementById('root');
+       const divOne = document.createElement('div');
+       var divOneParaOne = document.createElement('p');
+       var divOneParaTwo = document.createElement('p');
+       var divOneParaThree = document.createElement('p');
+        const divTwo = document.createElement('div');
+       var divTwoParaOne = document.createElement('p');
+       var divTwoParaTwo = document.createElement('p');
+       var divTwoParaThree = document.createElement('p');
+       divOne.setAttribute('class','entryOne');
+
+         divOneParaOne.textContent = 'Name: '+ globalData.user[flag].Name;
+         divOneParaTwo.textContent ='Age: '+globalData.user[flag].Password;
+         divOneParaThree.textContent ='Prescription: '+globalData.user[flag].Prescription;
+
+         divOne.appendChild(divOneParaOne);
+         divOne.appendChild(divOneParaTwo);
+         divOne.appendChild(divOneParaThree);
+           divTwo.setAttribute('class','entryOne');
+var driveLink = document.createElement('a');
+var sheetLink = document.createElement('a');
+         driveLink.textContent ='Drive Link: '+globalData.user[flag].DriveLink;
+         sheetLink.textContent ='Sheet Link: '+globalData.user[flag].SheetLink;
+driveLink.setAttribute('href',globalData.user[flag].DriveLink);
+sheetLink.setAttribute('href',globalData.user[flag].SheetLink);
+         divTwo.appendChild(divTwoParaOne);
+         divTwoParaOne.appendChild(driveLink);
+         divTwoParaTwo.appendChild(sheetLink)
+         divTwo.appendChild(divTwoParaTwo);
+         body.appendChild(divOne);
+         body.appendChild(divTwo);
+     }
+     if(n==1){
+       	display(flag);
+       }else{
+       	alert('Tap Again')
+       }
+    }
+    </script>
+    <!-- <script type="text/javascript" src="script.js"></script> -->
+</body>
+
+</html>

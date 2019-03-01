@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+body {
+    margin: 0px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    background-image: url('p.jpg');
+    background-size: cover;
+}
+
+.form {
+    background-color: rgba(123, 243, 228, 0.8);
+    padding: 10px 25px 25px 25px;
+    border-radius: 10px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    border: 0px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.5s;
+}
+
+button:hover {
+    transform: scale(0.9);
+    background-color: #2ECC71;
+    color: black;
+    border:2px solid black;
+
+}
+
+input {
+    height: 40px;
+    border: 0px;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+p {
+    font-size: 40px;
+    font-weight: 700;
+}
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
+    <title>Healthcare|Patient</title>
+</head>
+
+<body>
+    <div>
+        <div class="form">
+            <p>Log In</p>
+            <input type="text" name="logName" id="logName" placeholder="UserName">
+            <br>
+            <input type="text" name="logPass" id="logPass" placeholder="Password">
+            <br>
+            <button class="login" id ="btn" onclick="login()">Go</button>
+            </div>
+    </div>
+    <script type="text/javascript">
+    	var btn = document.getElementById('btn');
+    const login = () => {
+        var globalData ;
+        var pokeApi = new XMLHttpRequest();
+        pokeApi.open("GET", 'https://script.google.com/macros/s/AKfycbyjWNmmYEKNpnIrWdTLF7eGJXDxUigirttCJxAvlA/exec');
+        pokeApi.onload = () => {
+            var globalData = JSON.parse(pokeApi.responseText);
+            console.log(globalData);
+              
+        }
+        pokeApi.send();
+       }
+
+    </script>
+</body>
+
+</html>

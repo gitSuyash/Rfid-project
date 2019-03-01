@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+body {
+    margin: 0px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    background-image: url('d1.jpg');
+    background-size: cover;
+}
+
+.form {
+    background-color: rgba(214, 243, 226, 0.8);
+    padding: 10px 25px 25px 25px;
+    border-radius: 10px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    border: 0px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.5s;
+}
+
+button:hover {
+    transform: scale(0.9);
+    background-color: #2ECC71;
+    color: black;
+    border:2px solid black;
+
+}
+
+input {
+    height: 40px;
+    border: 0px;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+p {
+    font-size: 40px;
+    font-weight: 700;
+}
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
+    <title>Healthcare|Doctor</title>
+</head>
+
+<body>
+    <div>
+        <div class="form">
+            <p>Log In</p>
+            <input type="text" name="logName" id="logName" placeholder="UserName">
+            <br>
+            <input type="text" name="logPass" id="logPass" placeholder="Password">
+            <br>
+            <button class="login" id ="btn" onclick="verify()">Go</button>
+            </div>
+    </div>
+    <script type="text/javascript">
+ var globalData ;
+        var dataHolder;
+        var count;
+    	var btn = document.getElementById('btn');
+    
+       
+        var pokeApi = new XMLHttpRequest();
+        pokeApi.open("GET", 'https://script.google.com/macros/s/AKfycbyI6vFOaqoYpJXj17tTIb5gxHSnaynlSWEBP38Vh6dgIT--xrxh/exec');
+        pokeApi.onload = () => {
+            var globalData = JSON.parse(pokeApi.responseText);
+            dataHolder = globalData.user;
+            console.log(dataHolder);
+            count = dataHolder.length;
+         }
+        pokeApi.send();
+       
+       
+       function verify(){
+       	var n=0;
+       	 var loginName = document.getElementById('logName').value;
+        var loginPass = document.getElementById('logPass').value;
+        for(i=0;i<count;i++){
+        	if(dataHolder[i].Name == loginName && dataHolder[i].Password==loginPass){
+        		n=1;
+        		// alert('hurray');
+        	}
+        }
+        if(n==1)
+        {
+        // alert('hurray');	
+        window.open('test.html');
+        }
+        else{
+        		alert('fail');
+        	}
+
+       }
+
+    </script>
+</body>
+
+</html>
