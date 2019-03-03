@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style type="text/css">
 body {
     margin: 0px;
@@ -7,15 +10,18 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
     background-image: url('p.jpg');
     background-size: cover;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .form {
     background-color: rgba(123, 243, 228, 0.8);
     padding: 10px 25px 25px 25px;
     border-radius: 10px;
+        font-family: 'ZCOOL QingKe HuangYou', cursive;
+
 }
 
 button {
@@ -47,36 +53,109 @@ input {
     width: 300px;
     margin-top: 20px;
     border-radius: 5px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
-p {
+.log {
     font-size: 40px;
     font-weight: 700;
 }
+ a{
+        color:black;
+        text-decoration: none;
+
+    }
+    a:hover{
+        color :#226694;
+    }
+ #root {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        /*background-image: url('t1.jpg');*/
+        background-size: cover;
+    }
+    .verified{
+            margin: 0px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 22px;
+    font-family: Roboto;
+    background-image: url('p.jpg');
+    background-size: cover;
+    }
+
+    .entryOne {
+        background-color: rgba(123, 243, 228, 0.8);
+        color: black;
+        width: 500px;
+        height: 40vh;
+        font-size: 20px;
+        padding-left: 40px;
+        padding-top: 20px;
+        font-weight: 600;
+        border: 5px solid black  ;
+        border-radius: 15px;
+        font-size: 24px;
+    }
+
+    .entryTwo {
+        background-color: rgba(123, 243, 228, 0.8);
+        color: black;
+        width: 500px;
+        height: 40vh;
+        padding-left: 40px;
+        padding-top: 20px;
+        border: 5px solid black    ;
+        border-radius: 15px;
+        font-size: 24px;
+                font-weight: 600;
+
+    }
 </style>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou" rel="stylesheet">
-    <title>Healthcare|Patient</title>
+    <title>Patient | Healthcare</title>
 </head>
 
 <body>
-    <div>
+    <div class="start">
         <div class="form">
-            <p>Log In</p>
+            <p class="log">Log In</p>
             <input type="text" name="logName" id="logName" placeholder="UserName">
             <br>
-            <input type="text" name="logPass" id="logPass" placeholder="Password">
+            <input type="password" name="logPass" id="logPass" placeholder="Password">
             <br>
-            <button class="login" id ="btn" onclick="login()">Go</button>
+            <button class="login" id ="btn" onclick="verify()">Go</button>
             </div>
     </div>
+    <div id="root"></div>
     <script type="text/javascript">
  var globalData ;
         var dataHolder;
+        var globalName;
+        var globalPass;
+        var globalInfo;
+        var infoHolder;
         var count;
         var btn = document.getElementById('btn');
-    
+        var form = document.querySelector('.form');
+        console.log(form);
+        var root = document.querySelector('#root');
+         var start = document.querySelector('.start');
+        root.style.display ='none';
+        var n=0,a=0;
+        var flag = 0;
+        var allNames = [];
+        var countNew;
+           
        
         var pokeApi = new XMLHttpRequest();
         pokeApi.open("GET", 'https://script.google.com/macros/s/AKfycbzjNB3j-etX1jVOHkgnovK9LdXEDVrGpwqiIVVYDbHIO6Kgrvc/exec');
@@ -87,20 +166,97 @@ p {
             count = dataHolder.length;
          }
         pokeApi.send();
-       
+        var request = new XMLHttpRequest();
+        request.open("GET",'https://script.google.com/macros/s/AKfycbymKdPssVNVMEgrx4BqKbvmfSao8cxRP4uvFFaYvBTy4AJBeTo/exec');
+            
+
+        request.onload = () => {
+            var requestData = JSON.parse(request.responseText);
+            globalInfo = requestData;
+            infoHolder = globalInfo.user;
+            countNew=infoHolder.length;
+            console.log(globalInfo);
+        };
+        request.send();
        
        function verify(){
-         var loginName = document.getElementById('logName').value;
+        var loginName = document.getElementById('logName').value;
         var loginPass = document.getElementById('logPass').value;
+        globalName = loginName;
+        globalPass = loginPass;
+        
+       
+        var newDisplay = ()=>{
+             if(n==1){
+         form.style.display = 'none';
+         start.style.display ='none';
+        }
+             for(j=1;j<countNew;j++){
+        if(globalName==globalInfo.user[j].Name){
+            flag=j;
+            a=1;
+            console.log(globalInfo.user[flag].Name);
+                }
+       }
+// flag=1;
+       var display =(flag)=>{
+        const body = document.querySelector('body');
+        body.setAttribute('class','verified');
+        root.style.display = 'flex';
+        root.setAttribute('class','root');
+       const divOne = document.createElement('div');
+       var divOneParaOne = document.createElement('p');
+       var divOneParaTwo = document.createElement('p');
+       var divOneParaThree = document.createElement('p');
+        const divTwo = document.createElement('div');
+       var divTwoParaOne = document.createElement('p');
+       var divTwoParaTwo = document.createElement('p');
+       var divTwoParaThree = document.createElement('p');
+       divOne.setAttribute('class','entryOne');
+       divOne.setAttribute('data-aos','fade-right');
+
+         divOneParaOne.textContent = 'Name: '+ globalInfo.user[flag].Name;
+         divOneParaTwo.textContent ='Age: '+globalInfo.user[flag].Password;
+         divOneParaThree.textContent ='Prescription: '+globalInfo.user[flag].Prescription;
+
+         divOne.appendChild(divOneParaOne);
+         divOne.appendChild(divOneParaTwo);
+         divOne.appendChild(divOneParaThree);
+           divTwo.setAttribute('class','entryOne');
+           divTwo.setAttribute('data-aos','fade-left');
+var driveLink = document.createElement('a');
+var sheetLink = document.createElement('a');
+         driveLink.textContent ='Drive Link: '+globalInfo.user[flag].DriveLink;
+         sheetLink.textContent ='Sheet Link: '+globalInfo.user[flag].SheetLink;
+driveLink.setAttribute('href',globalInfo.user[flag].DriveLink);
+driveLink.setAttribute('target','_blank');
+sheetLink.setAttribute('href',globalInfo.user[flag].SheetLink);
+sheetLink.setAttribute('target','_blank');
+         divTwo.appendChild(divTwoParaOne);
+         divTwoParaOne.appendChild(driveLink);
+         divTwoParaTwo.appendChild(sheetLink)
+         divTwo.appendChild(divTwoParaTwo);
+         root.appendChild(divOne);
+         root.appendChild(divTwo);
+     }
+     if(a==1){
+        display(flag);
+     }
+
+        }
         for(i=0;i<count;i++){
             if(dataHolder[i].Name == loginName && dataHolder[i].Password==loginPass){
-                alert('hurray');
-            }else{
-                alert('fail');
+                n=1;
+                newDisplay();
             }
         }
        }
 
+    </script>
+     <script type="text/javascript">
+        AOS.init({
+            // duration:200;
+        });
     </script>
 </body>
 

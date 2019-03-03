@@ -2,14 +2,21 @@
 <html>
 
 <head>
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style type="text/css">
-    .check {
-        background-color: yellow;
-
-    }
+   body{
+   	margin:0px;
+   	/*background-image: url('t3.jpg');*/
+   	background: radial-gradient(at bottom, #0096D6 12%, #00328F);
+   	background-size: cover;
+   	height:100vh;
+   	overflow-y: hidden;
+   	overflow-x: hidden;
+   }
     a{
     	color:white;
     }
@@ -19,6 +26,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
 
     #root {
@@ -39,7 +47,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        background-image: url('t1.jpg');
+        /*background-image: url('t1.jpg');*/
         background-size: cover;
     }
 
@@ -50,7 +58,7 @@
         height: 40vh;
         padding-left: 40px;
         padding-top: 20px;
-        border: 15px solid #224E8D;
+        border: 15px solid #2ECC71    ;
         border-radius: 5px;
         font-size: 20px;
     }
@@ -62,18 +70,38 @@
         height: 40vh;
         padding-left: 40px;
         padding-top: 20px;
-        border: 15px solid #224E8D;
+        border: 15px solid #2ECC71    ;
         border-radius: 5px;
         font-size: 20px;
     }
+    .info{
+    	font-size: 32px;
+    	font-weight: 600;
+    	color:white;
+    }
+    .status{
+    	border:2px solid black;
+    	border-radius: 5px;
+    	padding:5px 15px;
+    	font-size: 24px;
+    	cursor: pointer;
+    	background-color: #3EC14E;
+    	color: white;
+    	transition: all 0.4s;
+    }
+    .status:hover{
+    	background-color: black;
+    	color: white;
+    	transform: scale(0.92);
+    }
     </style>
-    <title></title>
+    <title>RFID | Healthcare</title>
 </head>
 
 <body>
     <div class="input">
-        <P>Tap Patient's RFID</P><br>
-        <button onclick="call()">Get Status</button>
+        <div class="info">Tap Patient's RFID</div><br>
+        <div class="status"onclick="call()">Get Status</div>
     </div>
     <div id="root">
         <!--  <div class="entryOne">
@@ -92,8 +120,7 @@
     	var count;
     var request = new XMLHttpRequest();
         request.open("GET",'https://script.google.com/macros/s/AKfycbymKdPssVNVMEgrx4BqKbvmfSao8cxRP4uvFFaYvBTy4AJBeTo/exec');
-            // request.setRequestHeader('Access-Control-Allow-Headers', '*');
-            // // request.setRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36")
+            
 
         request.onload = () => {
             var pokeApiData = JSON.parse(request.responseText);
@@ -133,6 +160,7 @@ console.log(displayData);
        var divTwoParaTwo = document.createElement('p');
        var divTwoParaThree = document.createElement('p');
        divOne.setAttribute('class','entryOne');
+       divOne.setAttribute('data-aos','fade-right');
 
          divOneParaOne.textContent = 'Name: '+ globalData.user[flag].Name;
          divOneParaTwo.textContent ='Age: '+globalData.user[flag].Password;
@@ -142,12 +170,15 @@ console.log(displayData);
          divOne.appendChild(divOneParaTwo);
          divOne.appendChild(divOneParaThree);
            divTwo.setAttribute('class','entryOne');
+           divTwo.setAttribute('data-aos','fade-left');
 var driveLink = document.createElement('a');
 var sheetLink = document.createElement('a');
          driveLink.textContent ='Drive Link: '+globalData.user[flag].DriveLink;
          sheetLink.textContent ='Sheet Link: '+globalData.user[flag].SheetLink;
 driveLink.setAttribute('href',globalData.user[flag].DriveLink);
+driveLink.setAttribute('target','_blank');
 sheetLink.setAttribute('href',globalData.user[flag].SheetLink);
+sheetLink.setAttribute('target','_blank');
          divTwo.appendChild(divTwoParaOne);
          divTwoParaOne.appendChild(driveLink);
          divTwoParaTwo.appendChild(sheetLink)
@@ -161,6 +192,11 @@ sheetLink.setAttribute('href',globalData.user[flag].SheetLink);
        	alert('Tap Again')
        }
     }
+    </script>
+    <script type="text/javascript">
+    	AOS.init({
+    		// duration:200;
+    	});
     </script>
     <!-- <script type="text/javascript" src="script.js"></script> -->
 </body>
